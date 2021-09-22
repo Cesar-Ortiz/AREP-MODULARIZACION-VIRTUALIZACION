@@ -8,7 +8,7 @@ var index = (function (){
         function getImage(entrada, callback) {
             const promise = new Promise((resolve, reject) => {
                 $.ajax({
-                    url: "/appuser/" + entrada
+                    url: "/amazon/" + entrada
                 }).done(function (response) {
                     resolve(response);
                 }).fail(function (msg) {
