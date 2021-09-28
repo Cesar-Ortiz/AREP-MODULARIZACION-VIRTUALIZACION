@@ -1,11 +1,15 @@
 var index = (function (){
         function change(entrada) {
+            const body = $("tbody");
+            if (body !== null) {
+                body.remove();
+            }
             if (entrada != null && entrada != "") {
-                getImage(entrada, changeImage);
+                agregarText(entrada, getText);
             }
         }
 
-        function getImage(entrada, callback) {
+        function agregarText(entrada, callback) {
             const promise = new Promise((resolve, reject) => {
                 $.ajax({
                     url: "/amazon/" + entrada
@@ -21,14 +25,32 @@ var index = (function (){
             });
         }
 
-        function changeImage(data){
-            document.getElementById("img").src=data;
+        function getText(data){
+            console.log(data);
+            console.log(data[0]);
+            const tabla = $("table");
+            const body = $("tbody");
+            if (body != null) {
+                body.remove();
+            }
+            tabla.append("<tbody>");
+            const tblBody = $("tbody");
+            var columnas="";
+            for(const property in data){
+                columnas=columnas+'<tr>'
+                columnas=columnas+"<td>"+data[property].text+"</td>";
+                console.log(data[property].text);
+                columnas=columnas+"<td>"+data[property].date+"</td>";
+                columnas=columnas+"</tr>";
+            }
+            tblBody.append(columnas);
+            tabla.append("</tbody>");
         }
 
         return {
             change: change,
-            getImage: getImage,
-            changeImage: changeImage
+            agregarText: agregarText,
+            getText: getText
         }
 
     }
