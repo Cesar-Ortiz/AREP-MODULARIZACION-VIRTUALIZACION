@@ -22,7 +22,7 @@ public class RoundRobin {
     //   Integer sum=0;
     Integer  pos = 0;
 
-    public String getRoundRobin(){
+    public String getRobin(){
         Map<String,Integer> ipServerMap=new ConcurrentHashMap<>();
         ipServerMap.putAll(ipMap);
 

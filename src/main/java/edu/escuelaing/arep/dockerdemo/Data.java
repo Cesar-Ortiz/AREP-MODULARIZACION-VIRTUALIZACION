@@ -2,18 +2,19 @@ package edu.escuelaing.arep.dockerdemo;
 
 import java.util.Date;
 
-public class Table {
+public class Data {
     private String text;
     private Date date;
 
-    public Table(){}
+    public Data(){}
 
-    public Table(String text, Date date){
+    public Data(String text, Date date){
         this.text=text;
+
         this.date=date;
     }
 
-    public Table(String text){
+    public Data(String text){
         this.text=text;
         date= new Date();
     }

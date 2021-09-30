@@ -12,11 +12,11 @@ import java.util.ArrayList;
 import static spark.Spark.*;
 
 public class SparkWebServer {
-    private static RoundRobin wr;
+    private static RoundRobin rbin;
     private static HttpService servicio;
     static MongoConection mongoConection;
     public static void main(String... args){
-        wr=RoundRobin.getInstance();
+        rbin =RoundRobin.getInstance();
         servicio=HttpService.getInstance();
         mongoConection=MongoConection.getInstance();
         port(getPort());
@@ -26,15 +26,15 @@ public class SparkWebServer {
             response.header("Access-Control-Allow-Methods","GET");
         });
         get("hell", (req,res) -> "Hello Docker!");
-        post("amazondocker/entra", (req,res) -> enviarPalabra(req, res));
-        get("amazondocker/resultado", (req,res) -> obtenerDatos(req, res));
+        post("amazondocker/entra", (req,res) -> setData(req, res));
+        get("amazondocker/resultado", (req,res) -> getData(req, res));
         post("amazon/entra", (req,res) -> setText(req, res));
         get("amazon/resultado", (req,res) -> getText(req, res));
     }
 
-    private static String enviarPalabra(Request req, Response res) {
+    private static String setData(Request req, Response res) {
         System.out.println(req.body()+" requeeeeeeeeeest");
-        String urlService=wr.getRoundRobin();
+        String urlService= rbin.getRobin();
         System.out.println(urlService);
         String resultado="";
         try {
@@ -46,8 +46,8 @@ public class SparkWebServer {
         return resultado;
     }
 
-    private static String obtenerDatos(Request req, Response res) {
-        String urlService=wr.getRoundRobin();
+    private static String getData(Request req, Response res) {
+        String urlService= rbin.getRobin();
         System.out.println(urlService+"----------------------url-------");
         String resultado="";
         try {
@@ -63,7 +63,7 @@ public class SparkWebServer {
 
     private static String setText(Request req, Response res) {
         System.out.println(req.body()+" requeeeeeeeeeest");
-        Table t = new Table(req.body());
+        Data t = new Data(req.body());
         mongoConection.save(t);
         String JSON=getText(req,res);
         return JSON;
@@ -71,8 +71,8 @@ public class SparkWebServer {
 
     private static String getText(Request req, Response res) {
         res.type("application/json");
-        ArrayList<Table> tabla=mongoConection.getText();
-        ArrayList<Table> t=new ArrayList<Table>();
+        ArrayList<Data> tabla=mongoConection.getText();
+        ArrayList<Data> t=new ArrayList<Data>();
         for(int i=tabla.size()-10;i<tabla.size();i++) {
             if(i>=0) {
                 t.add(tabla.get(i));
