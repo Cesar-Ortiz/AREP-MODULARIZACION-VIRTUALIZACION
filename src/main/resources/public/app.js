@@ -5,23 +5,18 @@ var index = (function (){
                 body.remove();
             }
             if (entrada != null && entrada != "") {
-                agregarText(entrada, getText);
+                agregarText(entrada).then(function(data){
+                    getText(data)
+                });
             }
         }
 
-        function agregarText(entrada, callback) {
-            const promise = new Promise((resolve, reject) => {
-                $.ajax({
-                    url: "/amazondocker/entra/" + entrada
-                }).done(function (response) {
-                    resolve(response);
-                }).fail(function (msg) {
-                    reject(msg);
-                });
-            });
-
-            promise.then(res => {
-                callback(res);
+        function agregarText(entrada) {
+            return $.ajax({
+                url: "/amazondocker/entra",
+                type: "POST",
+                data: entrada,
+                contentType: "application/json",
             });
         }
 
