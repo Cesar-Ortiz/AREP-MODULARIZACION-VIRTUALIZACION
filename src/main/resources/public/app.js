@@ -12,7 +12,7 @@ var index = (function (){
         function agregarText(entrada, callback) {
             const promise = new Promise((resolve, reject) => {
                 $.ajax({
-                    url: "/amazon/" + entrada
+                    url: "/amazondocker/entra/" + entrada
                 }).done(function (response) {
                     resolve(response);
                 }).fail(function (msg) {

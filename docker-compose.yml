@@ -3,12 +3,26 @@ version: '2'
 
 services:
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: cesarortizr/dockerdemo_web
     container_name: web
     ports:
-      - "8087:6000"
+      - "30000:6000"
+  web2:
+    image: cesarortizr/dockerdemo_web
+    container_name: web2
+    ports:
+      - "8088:6000"
+  web3:
+    image: cesarortizr/dockerdemo_web
+    container_name: web3
+    ports:
+      - "8089:6000"
+
+  web4:
+    image: cesarortizr/dockerdemo_web
+    container_name: web4
+    ports:
+      - "8090:6000"
   db:
     image: mongo:3.6.1
     container_name: db
